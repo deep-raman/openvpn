@@ -1,0 +1,14 @@
+diffie_hellman_file: /etc/openvpn/dhparams.pem
+ca_key: /etc/openvpn/shiva_ca.key
+ca_csr: /etc/openvpn/shiva_ca.csr
+ca_crt: /etc/openvpn/shiva_ca.crt
+server_key: /etc/openvpn/shiva_server.key
+server_csr: /etc/openvpn/shiva_server.csr
+server_crt: /etc/openvpn/shiva_server.crt
+ca_name: SHIVA-CA
+server_name: shiva-server
+country: ES
+
+
+
+

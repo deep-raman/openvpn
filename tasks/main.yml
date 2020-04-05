@@ -16,3 +16,52 @@
     state: present
     update_cache: yes
 
+- name: Generate Diffie-Hellman parameters
+  openssl_dhparam:
+    path: "{{ diffie_hellman_file }}"
+    state: present
+    backup: yes
+ 
+- name: Generate CA Certificate Authority key
+  openssl_privatekey:
+    path: "{{ ca_key }}"
+    size: 4096
+    state: present
+    backup: yes
+    
+- name: Generate CA Certificate Signing request
+  openssl_csr:
+    path: "{{ ca_csr }}"
+    privatekey_path: "{{ ca_key }}"
+    common_name: "{{ ca_name }}"
+    country_name: "{{ country }}"
+
+- name: Generate CA Certificate
+  openssl_certificate:
+    path: "{{ ca_crt }}"
+    privatekey_path: "{{ ca_key }}"
+    csr_path: "{{ ca_csr }}"
+    provider: shiva_ca 
+
+- name: Generate server Certificate Authority key
+  openssl_privatekey:
+    path: "{{ server_key }}"
+    size: 4096
+    state: present
+    backup: yes
+    
+- name: Generate server Certificate Signing request
+  openssl_csr:
+    path: "{{ server_csr }}"
+    privatekey_path: "{{ server_key }}"
+    common_name: "{{ server_name }}"
+    country_name: "{{ country }}"
+
+- name: Generate server Certificate
+  openssl_certificate:
+    path: "{{ server_crt }}"
+    #privatekey_path: "{{ server_key }}"
+    csr_path: "{{ server_csr }}"
+    ownca_path: "{{ ca_crt }}"
+    ownca_privatekey_path: "{{ ca_key }}"
+    provider: shiva_ca 
