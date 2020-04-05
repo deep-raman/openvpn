@@ -10,6 +10,12 @@
     state: present
     update_cache: yes
 
+#- name: Install pyOpenSSL package
+#  yum:
+#    name: pyOpenSSL
+#    state: present
+#    update_cache: yes
+    
 - name: Install openvpn package
   yum:
     name: openvpn
@@ -41,7 +47,7 @@
     path: "{{ ca_crt }}"
     privatekey_path: "{{ ca_key }}"
     csr_path: "{{ ca_csr }}"
-    provider: shiva_ca 
+    provider: selfsigned 
 
 - name: Generate server Certificate Authority key
   openssl_privatekey:
@@ -64,4 +70,8 @@
     csr_path: "{{ server_csr }}"
     ownca_path: "{{ ca_crt }}"
     ownca_privatekey_path: "{{ ca_key }}"
-    provider: shiva_ca 
+    provider: ownca 
+
+- import_tasks: configure_openvpn.yml
+  tags:
+    - configure_openvpn
