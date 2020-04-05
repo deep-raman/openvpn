@@ -1,0 +1,29 @@
+- name: Upload openvpn server configuration
+  template:
+    src: "{{ openvpn_template }}"
+    dest: "{{ openvpn_serverconf }}"
+    backup: yes
+
+- name: Start and enable openvpn service
+  systemd:
+    name: openvpn
+    state: restarted
+    enable: yes
+
+- name: Allow vpn traffic
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: eth0
+    jump: MASQUERADE
+    source: "{{ openvpn_network }}/{{ cidr }}"
+    comment: Allow vpn traffic
+  become: yes
+
+- name: Allow ip forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes

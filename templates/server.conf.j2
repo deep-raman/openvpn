@@ -1,0 +1,21 @@
+server {{ openvpn_network }} {{ openvpn_mask }} 
+verb 3
+key {{ server_key }}
+ca {{ ca_crt }}
+cert {{ server_crt }}
+dh {{ diffie_hellman_file }}
+keepalive 10 120
+persist-key
+persist-tun
+comp-lzo
+push "redirect-gateway def1 bypass-dhcp"
+push "dhcp-option DNS {{ dns1 }}"
+push "dhcp-option DNS {{ dns2 }}"
+
+user {{ openvpn_user }}
+group {{ openvpn_group }}
+
+proto udp
+port 1194
+dev tun1194
+status openvpn-status.log
