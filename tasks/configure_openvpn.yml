@@ -6,9 +6,9 @@
 
 - name: Start and enable openvpn service
   systemd:
-    name: openvpn
+    name: openvpn@server
     state: restarted
-    enable: yes
+    enabled: yes
 
 - name: Allow vpn traffic
   iptables:
