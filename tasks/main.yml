@@ -75,3 +75,7 @@
 - import_tasks: configure_openvpn.yml
   tags:
     - configure_openvpn
+
+- import_tasks: generate_client_cert.yml
+  tags:
+    - generate_client_crt
