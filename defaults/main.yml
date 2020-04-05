@@ -16,4 +16,4 @@ cidr: 24
 dns1: 8.8.8.8
 dns2: 8.8.4.4
 openvpn_user: nobody
-openvpn_group: nogroup
+openvpn_group: nobody
